@@ -1,0 +1,60 @@
+/*
+9b.Write a Java Servlet Program to display how many times a visitor is visiting the webpage using session object. 
+If the user is visiting for the first time, display Welcome message, else display the number of times he is visiting the page.
+*/
+
+<!-- VisitCounterServlet.java -->
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/VisitCounterServlet")
+public class VisitCounterServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Get the session object
+        HttpSession session = request.getSession();
+
+        // Retrieve the visit count from session, if not present, initialize to 1
+        Integer visitCount = (Integer) session.getAttribute("visitCount");
+        if (visitCount == null) {
+            visitCount = 1;
+        } else {
+            visitCount++;
+        }
+
+        // Store the updated visit count in the session
+        session.setAttribute("visitCount", visitCount);
+
+        PrintWriter out = response.getWriter();
+        out.println("<html>");
+        out.println("<head><title>Visit Counter</title></head>");
+        out.println("<body>");
+        if (visitCount == 1) {
+            out.println("<h1>Welcome! You are visiting this page for the first time.</h1>");
+        } else {
+            out.println("<h1>Welcome back! You have visited this page " + visitCount + " times.</h1>");
+        }
+        out.println("<a href='VisitCounterServlet'>Refresh Page</a>");
+        out.println("</body>");
+        out.println("</html>");
+    }
+}
+
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Visit Counter Example</title>
+</head>
+<body>
+    <h1>Visit Counter Example</h1>
+    <a href="VisitCounterServlet">Refresh Page</a>
+</body>
+</html>
