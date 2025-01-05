@@ -1,0 +1,89 @@
+/*
+6b. Write a Java Servlet program that loads area and phone no. of police station of that area from a database.
+It takes area or phone number as input and prints the details in a separate page. Create police_station table with appropriate fields
+*/
+
+
+// Police.java
+
+package myPack;
+
+import java.io.*;
+import java.sql.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+//import jakarta.servlet.annotation.*;
+
+//@WebServlet("/Police")
+public class Police extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/dbName"; // Update this
+    private static final String USER = "root"; // Update this
+    private static final String PASS = ""; // Update this
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        String area = request.getParameter("area");
+        String phoneNumber = request.getParameter("phoneNumber");
+
+        Connection conn = null;
+        PreparedStatement pStmt = null;
+
+        try {
+            //Class.forName("com.mysql.cj.jdbc.Driver");
+
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            String sql = "SELECT * FROM police_station WHERE area = ? OR phone_number = ?";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setString(1, area);
+            pStmt.setString(2, phoneNumber);
+
+            ResultSet rs = pStmt.executeQuery();
+
+            if (rs.next()) {
+                out.println("<h2>Police Station Details:</h2>");
+                out.println("Area: " + rs.getString("area") + "<br>");
+                out.println("Phone Number: " + rs.getString("phone_number") + "<br>");
+                out.println("Address: " + rs.getString("address") + "<br>");
+            } else {
+                out.println("<h2>No police station found for the given area or phone number.</h2>");
+            }
+
+        //} catch (ClassNotFoundException e) {
+        //    e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pStmt != null)
+                    pStmt.close();
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Police Station</title>
+</head>
+<body>
+    <h1>Police Station</h1>
+    <form action="Police" method="post">
+        Area: <input type="text" name="area"><br><br>
+        Phone Number: <input type="text" name="phoneNumber"><br><br>
+        <button type="submit">Lookup</button>
+    </form>
+</body>
+</html>
