@@ -1,3 +1,12 @@
+/*
+3a.	Write a java program that connects to a Bank_Account (Account_No, Account_Name,
+Type_of_Account, Balance) table using JDBC and perform the following.
+i.	Insert rows using PreparedStatement.
+ii.	Display details of all the Accounts.
+iii.	Demonstrate the Working of Rollback and Commit.
+iv.	Demonstrate the Working of SavePoints.
+*/
+
 package AdvJava.week4;
 
 import java.sql.*;
