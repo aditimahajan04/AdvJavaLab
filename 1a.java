@@ -1,3 +1,12 @@
+/*
+    1.	a. Write a java program that connects to a Department (Dept_ID, Name, Year_Established, Head_Name, No_of_Employees) database using JDBC and perform the following.
+i.	Display details of all the Departments using Statement Object.
+ii.	Display details of all the Departments which are established in the year 2000 using PreparedStatement object.
+iii.	Display details of all the Departments by reading Dept_ID and Department_Name from the user using PreparedStatement object.
+iv.	Insert a new row using PreparedStatement object. Display the details.
+ */
+
+
 package AdvJava.week3;
 
 import java.sql.*;
