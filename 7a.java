@@ -1,3 +1,11 @@
+/*
+7.	a. Write a java program that connects to the database College with Student table. Assume appropriate attributes for the
+    Student table. Write a program to display the details of those Students who have CGPA less than 9. Also update the Student
+    table to change the CGPA of student named “John” from 8.50 to 9.4 using updatable result set. Finally display the results and 
+    disconnect from the database.
+*/
+
+
 package AdvJava.week2;
 
 import java.sql.*;
