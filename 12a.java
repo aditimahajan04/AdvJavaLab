@@ -1,7 +1,9 @@
-// Question:12a
-// a. Develop a Java program using JDBC to execute the following operations on an Employee table:
-// i. Delete records of employees working on a project specified by the user.
-// ii. Retrieve and display details of all employees sorted by their salary in descending order.
+/*
+Question:
+12a. Develop a Java program using JDBC to execute the following operations on an Employee table:
+i. Delete records of employees working on a project specified by the user.
+ii. Retrieve and display details of all employees sorted by their salary in descending order.
+*/
 
 import java.sql.*;
 import java.util.Scanner;
