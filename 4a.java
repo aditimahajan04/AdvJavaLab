@@ -1,3 +1,9 @@
+/*
+4.	a.   Write a java Program to create a database to store country details namely, country_code, capital, continent, population and
+    display at least 5 country details in ascending order of their population in a table format.	 
+*/
+
+
 import java.sql.*;
 
 public class CountryDetailsDB {
