@@ -1,0 +1,98 @@
+/*
+8b.Write a java servlet program to create 4 cookies. Set 2 cookies with 1minute of expiry date. Display all the cookies when the servlet is loaded for the first time. Refresh the page
+and display the remaining 2 cookies.
+*/
+
+
+<!-- SetCookiesServlet.java -->
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/SetCookiesServlet")
+public class SetCookiesServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Creating 4 cookies
+        Cookie cookie1 = new Cookie("cookie1", "value1");
+        Cookie cookie2 = new Cookie("cookie2", "value2");
+        Cookie cookie3 = new Cookie("cookie3", "value3");
+        Cookie cookie4 = new Cookie("cookie4", "value4");
+
+        // Setting expiry times
+        cookie1.setMaxAge(60);  // 1 minute
+        cookie2.setMaxAge(60);  // 1 minute
+        cookie3.setMaxAge(3600); // 1 hour
+        cookie4.setMaxAge(86400); // 1 day
+
+        response.addCookie(cookie1);
+        response.addCookie(cookie2);
+        response.addCookie(cookie3);
+        response.addCookie(cookie4);
+
+        PrintWriter out = response.getWriter();
+        out.println("<html>");
+        out.println("<head><title>Set Cookies</title></head>");
+        out.println("<body>");
+        out.println("<h1>Cookies have been set!</h1>");
+        out.println("<a href='GetCookiesServlet'>View Cookies</a>");
+        out.println("</body>");
+        out.println("</html>");
+    }
+}
+
+
+GetCookiesServlet.java:
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/GetCookiesServlet")
+public class GetCookiesServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Cookie[] cookies = request.getCookies();
+
+        PrintWriter out = response.getWriter();
+        out.println("<html>");
+        out.println("<head><title>Get Cookies</title></head>");
+        out.println("<body>");
+        out.println("<h1>Cookies Retrieved:</h1>");
+
+        if (cookies != null) {
+            out.println("<table border='1'><tr><th>Name</th><th>Value</th></tr>");
+            for (Cookie cookie : cookies) {
+                out.println("<tr><td>" + cookie.getName() + "</td><td>" + cookie.getValue() + "</td></tr>");
+            }
+            out.println("</table>");
+        } else {
+            out.println("<p>No cookies found.</p>");
+        }
+
+        out.println("<a href='SetCookiesServlet'>Set Cookies</a>");
+        out.println("</body>");
+        out.println("</html>");
+    }
+}
+
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cookie Example</title>
+</head>
+<body>
+    <h1>Cookie Example</h1>
+    <a href="SetCookiesServlet">Set Cookies</a><br><br>
+    <a href="GetCookiesServlet">Get Cookies</a>
+</body>
+</html>
