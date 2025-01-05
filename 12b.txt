@@ -1,0 +1,72 @@
+/*
+12b. Develop a JSP application that has the following pages. The index page register.html contains 2 text boxes for
+entering username and password. Provide a button "Register". Once the Register button is clicked the page should be
+redirected to welcome.jsp. In welcome.jsp validate username and password and display welcome message for a valid user (Use Sessions).
+*/
+
+<!-- register.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+    <form action="welcome.jsp" method="post">
+        Username: <input type="text" name="username" required><br><br>
+        Password: <input type="password" name="password" required><br><br>
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>
+
+<!-- welcome.jsp -->
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.*" %>
+<%
+    // Get username and password from the request
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
+
+    // Validate inputs
+    if (username != null && password != null && !username.isEmpty() && !password.isEmpty()) {
+        // Store user details in the session
+        HttpSession session = request.getSession();
+        session.setAttribute("username", username);
+        session.setAttribute("password", password);
+
+        // Display welcome message
+        out.println("<h1>Welcome, " + username + "!</h1>");
+    } else {
+        // Redirect back to register.html for invalid input
+        response.sendRedirect("register.html");
+    }
+%>
+<a href="logout.jsp">Logout</a>
+
+<!-- logout.jsp -->
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    // Invalidate session
+    HttpSession session = request.getSession(false);
+    if (session != null) {
+        session.invalidate();
+    }
+    // Redirect to register.html
+    response.sendRedirect("register.html");
+%>
+
+<!-- error.jsp -->
+<%@ page isErrorPage="true" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Error Page</title>
+</head>
+<body>
+    <p>An error occurred: <%= exception %></p>
+    <a href="register.html">Back to Registration</a>
+</body>
+</html>
