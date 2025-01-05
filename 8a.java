@@ -1,5 +1,7 @@
-//a. Write a java program to insert and display the student information from the database Update the grade from 'A' to 'S' where 
-//student name = "Ram" using prepared statement. (Consider Student Database with student name, usn, sem, course and grade) 
+/*
+8a. Write a java program to insert and display the student information from the database Update the grade from 'A' to 'S' where 
+student name = "Ram" using prepared statement. (Consider Student Database with student name, usn, sem, course and grade) 
+*/
 
 import java.sql.*;
 
