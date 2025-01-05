@@ -1,3 +1,14 @@
+/*
+2.	a.	Write a java program that connects to the Movies (ID, Movie_Name, Genre,
+IMDB_Rating, Year) database using JDBC. Create an Updatable ResultSet and perform the following operations.
+i. Display details of all the Movies from the table.
+ii. Display details of 5th Movie from the table.
+iii. Insert a new row into the table using PreparedStatement and display all the details.
+iv. Delete a row from the table where the IMDB_Rating is less than 5.
+v. Update the Genre of a movie with ID as 10 to “Sci-fi”.	 
+*/
+
+
 package AdvJava.week3;
 
 import java.sql.*;
