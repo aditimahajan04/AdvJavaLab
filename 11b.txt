@@ -1,0 +1,101 @@
+/*
+11b.Write a servlet program that uses JDBC to display the subjects allotted for the faculty. Subjects Table should 
+have Sub_ID, Sub_Name and Faculty_ID as the fields. Update subject details for afaculty and display how many rows are updated.
+*/
+
+<!-- SubjectServlet.java -->
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/SubjectServlet")
+public class SubjectServlet extends HttpServlet {
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/college";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "";
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            Statement stmt = conn.createStatement();
+
+            if ("view".equals(action)) {
+                displaySubjects(stmt, response);
+            } else if ("update".equals(action)) {
+                String subID = request.getParameter("subID");
+                String newSubName = request.getParameter("subName");
+                int rowsUpdated = updateSubject(stmt, subID, newSubName);
+                displayUpdatedCount(response, rowsUpdated);
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void displaySubjects(Statement stmt, HttpServletResponse response) throws IOException, SQLException {
+        PrintWriter out = response.getWriter();
+        out.println("<html>");
+        out.println("<head><title>Subjects for Faculty</title></head>");
+        out.println("<body>");
+        out.println("<h1>Subjects Allotted to Faculty</h1>");
+        out.println("<table border='1'><tr><th>Sub_ID</th><th>Sub_Name</th><th>Faculty_ID</th></tr>");
+
+        ResultSet rs = stmt.executeQuery("SELECT * FROM subjects");
+
+        while (rs.next()) {
+            out.println("<tr>");
+            out.println("<td>" + rs.getInt("Sub_ID") + "</td>");
+            out.println("<td>" + rs.getString("Sub_Name") + "</td>");
+            out.println("<td>" + rs.getInt("Faculty_ID") + "</td>");
+            out.println("</tr>");
+        }
+
+        out.println("</table>");
+        out.println("<br><a href='SubjectServlet?action=update'>Update Subject Details</a>");
+        out.println("</body>");
+        out.println("</html>");
+    }
+
+    private int updateSubject(Statement stmt, String subID, String newSubName) throws SQLException {
+        String updateQuery = "UPDATE subjects SET Sub_Name = ? WHERE Sub_ID = ?";
+        PreparedStatement pstmt = stmt.getConnection().prepareStatement(updateQuery);
+        pstmt.setString(1, newSubName);
+        pstmt.setInt(2, Integer.parseInt(subID));
+        return pstmt.executeUpdate();
+    }
+
+    private void displayUpdatedCount(HttpServletResponse response, int rowsUpdated) throws IOException {
+        PrintWriter out = response.getWriter();
+        out.println("<html>");
+        out.println("<head><title>Update Result</title></head>");
+        out.println("<body>");
+        out.println("<h1>Subject Details Updated</h1>");
+        out.println("<p>" + rowsUpdated + " rows updated successfully.</p>");
+        out.println("<a href='SubjectServlet?action=view'>View All Subjects</a>");
+        out.println("</body>");
+        out.println("</html>");
+    }
+}
+
+<!-- web.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="3.0">
+    <servlet>
+        <servlet-name>SubjectServlet</servlet-name>
+        <servlet-class>SubjectServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SubjectServlet</servlet-name>
+        <url-pattern>/SubjectServlet</url-pattern>
+    </servlet-mapping>
+</web-app>
