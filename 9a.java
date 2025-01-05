@@ -1,6 +1,8 @@
-//a.	Create a	database called ‘Registration’ and	a table called ‘student’ with fields Roll-No., Name, Program and Year-of-Admission. Write a java program to
-//(i)	List the name and roll number of all the students who are enrolled in year 2023.
-//(ii)	List the Roll-No and Name of all the students of BE Program.
+/*
+9a.	Create a	database called ‘Registration’ and	a table called ‘student’ with fields Roll-No., Name, Program and Year-of-Admission. Write a java program to
+(i)	List the name and roll number of all the students who are enrolled in year 2023.
+(ii)	List the Roll-No and Name of all the students of BE Program.
+*/
 
 
 import java.sql.*;
