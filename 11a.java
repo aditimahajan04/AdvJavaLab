@@ -1,6 +1,8 @@
-//Question:11a
-// Write a Java program to insert and display the employee database information whose salary is above Rs. 50,000 in a table format.
-// (Consider Employee Database with Employee name, designation, Dept, and salary)
+/*
+Question:11a
+Write a Java program to insert and display the employee database information whose salary is above Rs. 50,000 in a table format.
+(Consider Employee Database with Employee name, designation, Dept, and salary)
+*/
 
 import java.sql.*;
 import java.util.Scanner;
