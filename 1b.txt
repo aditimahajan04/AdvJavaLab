@@ -1,0 +1,4 @@
+/*
+3b. Write a Servlet program that reads following information -> Employee’s name, number of hours worked in week, hourly pay rate, 
+tax (20%) from the user and prints a statement of payroll with employee’s details.
+*/
