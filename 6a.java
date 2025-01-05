@@ -1,3 +1,8 @@
+/*
+6a. Write a java program to create Employee details and update the designation of     
+    an employee from Assistant Professor to Associate Professor. (Consider Employee Database with Employee name, designation, dept and salary)
+ */
+
 import java.sql.*;
 
 public class EmployeeDetailsDB {
