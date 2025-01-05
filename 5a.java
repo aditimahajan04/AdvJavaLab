@@ -1,3 +1,12 @@
+/*
+5a. Write a java program that connects to the Subject (Code, Name, Department, Credits) database using JDBC. Create an Updatable ResultSet and perform the following operations.
+      i. Update the Name of the subject from “Java Programming Lab” to “Advanced Java
+         Programming Lab” with Code as CSL56.
+      ii. Delete the subject “System Programming” from the table. Use PreparedStatement
+          Object.
+      iii. Display details of all the Subjects.
+*/
+
 package AdvJava.week3;
 
 import java.sql.*;
