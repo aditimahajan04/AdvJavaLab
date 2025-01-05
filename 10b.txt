@@ -1,0 +1,55 @@
+/*
+b.	Write a JSP program that takes the user’s name and age from a form. Echo back the nameand age along with a message stating the price of movie tickets. The price is determinedbythe age passed totheJSP.
+•	Iftheageisgreaterthan62,themovieticketpriceisRs.50.
+•	Ifthe userislessthan 10yearsold, theprice isRs.30.
+•	Foreveryoneelse,thepriceisRs.80.
+*/
+
+<!-- index.jsp -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Ticket Price</title>
+</head>
+<body>
+    <h1>Movie Ticket Price Calculator</h1>
+    <form action="result.jsp" method="post">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="age">Age:</label><br>
+        <input type="number" id="age" name="age" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+
+<!-- result.jsp -->
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Ticket Price</title>
+</head>
+<body>
+    <h1>Movie Ticket Price</h1>
+    <%
+        String name = request.getParameter("name");
+        int age = Integer.parseInt(request.getParameter("age"));
+        int ticketPrice;
+
+        if (age > 62) {
+            ticketPrice = 50;
+        } else if (age < 10) {
+            ticketPrice = 30;
+        } else {
+            ticketPrice = 80;
+        }
+    %>
+    <p>Name: <%= name %></p>
+    <p>Age: <%= age %></p>
+    <p>Movie Ticket Price: Rs. <%= ticketPrice %></p>
+    <a href="index.jsp">Back to Home</a>
+</body>
+</html>
